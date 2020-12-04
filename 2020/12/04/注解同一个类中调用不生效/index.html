@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020 | 浮亮2021的博客</title>
+  <title>注解同一个类中调用不生效 | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hello1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="浮亮2021的博客">
-<meta property="og:url" content="http://example.com/archives/2020/index.html">
+  <meta name="description" content="问题项目启动的时候，需要执行一些业务逻辑。由于担心这段逻辑对项目启动有影响，特意在这个方法上加了 SpringBoot 的 @Async 注解，希望异步去执行，结果发现并没有起作用。 解决方法改成手动 new Thread 的方式即可。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注解同一个类中调用不生效">
+<meta property="og:url" content="http://example.com/2020/12/04/%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="hello1">
+<meta property="og:description" content="问题项目启动的时候，需要执行一些业务逻辑。由于担心这段逻辑对项目启动有影响，特意在这个方法上加了 SpringBoot 的 @Async 注解，希望异步去执行，结果发现并没有起作用。 解决方法改成手动 new Thread 的方式即可。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/async.jpg">
+<meta property="article:published_time" content="2020-12-04T12:56:47.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:59:21.062Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="工作中的一些问题和总结">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/async.jpg">
   
   
     <link rel="icon" href="/favicon.png">
@@ -159,36 +164,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="踩坑：springboot-注解同一个类中调用不生效" class="article article-type-踩坑：springboot " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      注解同一个类中调用不生效
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-踩坑：springboot">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" class="archive-article-date">
+
+        
+        <a href="/2020/12/04/%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" class="archive-article-date">
   	<time datetime="2020-12-04T12:56:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/">注解同一个类中调用不生效</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>项目启动的时候，需要执行一些业务逻辑。由于担心这段逻辑对项目启动有影响，特意在这个方法上加了 SpringBoot 的 <code>@Async</code> 注解，希望异步去执行，结果发现并没有起作用。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>改成手动 <code>new Thread</code> 的方式即可。</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="Async-不起作用的原因"><a href="#Async-不起作用的原因" class="headerlink" title="@Async 不起作用的原因"></a><code>@Async</code> 不起作用的原因</h2><p>参考：<a target="_blank" rel="noopener" href="https://ducmanhphan.github.io/2020-03-26-How-to-use-@Async-annotations-in-Spring/">How to use @Async annotation in Spring</a>：</p>
+<blockquote>
+<p>Because in this case, although it creates a proxy, the call bypasses the proxy and directly call the method so that Thread will not be spawned.</p>
+</blockquote>
+<p><img src="/images/async.jpg" alt="IMAGE"></p>
+<h2 id="Async-应该怎么用"><a href="#Async-应该怎么用" class="headerlink" title="@Async 应该怎么用"></a><code>@Async</code> 应该怎么用</h2><ol>
+<li>加一个 <code>@EnableAsync</code> 注解：By default, @EnableAsync detects Spring’s @Async annotation.</li>
+<li>它是要用代理的，所以要注意，要用 public 方法，并且不能在一个类中自己调用。</li>
+<li>不要用在 <code>@Configuration</code> 类中。</li>
+</ol>
+<p>关于线程池：如果什么也不配置，那么就用默认线程池，如果想配置，像这样：</p>
+<ol>
+<li>创造一个线程池的 bean：<code>@Bean(&quot;threadPoolTaskExecutor&quot;)</code></li>
+<li><code>@Async(&quot;threadPoolTaskExecutor&quot;)</code> 指定一下就可以了。</li>
+</ol>
+<p>如果什么都没配置，默认会使用 <code>SimpleAsyncTaskExecutor</code>：</p>
+<blockquote>
+<p>TaskExecutor implementation that fires up a new Thread for each task, executing it asynchronously.</p>
+</blockquote>
+<blockquote>
+<p>By default, the number of concurrent threads is unlimited.</p>
+</blockquote>
+<blockquote>
+<p>NOTE: This implementation does not reuse threads!</p>
+</blockquote>
+<h2 id="Transaction-注解"><a href="#Transaction-注解" class="headerlink" title="@Transaction 注解"></a>@Transaction 注解</h2><p>注意 @Transaction 注解也有同样的问题。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,247 +233,55 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-12-04T11:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">个人健身动作整理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/">个人健身动作整理</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">随便写写</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/30/%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%80%E8%88%AC%E8%AE%A8%E8%AE%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-11-30T12:10:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/30/%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%80%E8%88%AC%E8%AE%A8%E8%AE%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/">物理层一般讨论什么问题</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">一些基础知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/30/%E5%81%9A%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E7%82%B9/" class="archive-article-date">
-  	<time datetime="2020-11-30T12:03:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/30/%E5%81%9A%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E7%82%B9/">做一个需求需要考虑的点</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">System-Design</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/29/LeetCode-Two-Pointer%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-11-29T10:18:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/29/LeetCode-Two-Pointer%E7%B1%BB%E5%9E%8B/">LeetCode:Two_Pointer类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/29/%E6%89%AB%E7%9B%B2%EF%BC%9AQueryDSL/" class="archive-article-date">
-  	<time datetime="2020-11-29T10:12:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/29/%E6%89%AB%E7%9B%B2%EF%BC%9AQueryDSL/">扫盲：MapStruct</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/29/2020%E5%B9%B411%E6%9C%88%E4%BB%BD%E6%80%BB%E7%BB%93%E5%92%8C12%E6%9C%88%E4%BB%BD%E8%AE%A1%E5%88%92/" class="archive-article-date">
-  	<time datetime="2020-11-29T07:08:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/29/2020%E5%B9%B411%E6%9C%88%E4%BB%BD%E6%80%BB%E7%BB%93%E5%92%8C12%E6%9C%88%E4%BB%BD%E8%AE%A1%E5%88%92/">2020年11月份总结和12月份计划</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">随便写写</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -463,8 +304,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
