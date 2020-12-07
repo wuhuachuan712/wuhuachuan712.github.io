@@ -6,22 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>工作总结：JavaStream流式写法 | 浮亮2021的博客</title>
+  <title>Version乐观锁的坑-domain层转化丢失version版本号 | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言工作中大量用到了 Java Stream 的流式写法，自己又不是用得特别6，所以整体复习下这块。 Java Stream 中的所有函数整理了下 Stream 类的所有 API 和工作中使用最多的几个：">
+  <meta name="description" content="前言今天解决公司项目一个关于乐观锁的 bug。因为在不同项目上遇到过2次了，特意记录一下。 业务背景：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工作总结：JavaStream流式写法">
-<meta property="og:url" content="http://example.com/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/index.html">
+<meta property="og:title" content="Version乐观锁的坑-domain层转化丢失version版本号">
+<meta property="og:url" content="http://example.com/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="前言工作中大量用到了 Java Stream 的流式写法，自己又不是用得特别6，所以整体复习下这块。 Java Stream 中的所有函数整理了下 Stream 类的所有 API 和工作中使用最多的几个：">
+<meta property="og:description" content="前言今天解决公司项目一个关于乐观锁的 bug。因为在不同项目上遇到过2次了，特意记录一下。 业务背景：">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/javastream.png">
-<meta property="article:published_time" content="2020-12-05T06:14:47.000Z">
-<meta property="article:modified_time" content="2020-12-05T06:19:07.695Z">
+<meta property="og:image" content="http://example.com/images/version.png">
+<meta property="og:image" content="http://example.com/images/version1.png">
+<meta property="article:published_time" content="2020-12-07T13:54:46.000Z">
+<meta property="article:modified_time" content="2020-12-07T13:56:27.664Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="工作中的一些问题和总结">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/javastream.png">
+<meta name="twitter:image" content="http://example.com/images/version.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -164,51 +165,41 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-工作总结：JavaStream流式写法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Version乐观锁的坑-domain层转化丢失version版本号" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      工作总结：JavaStream流式写法
+      Version乐观锁的坑-domain层转化丢失version版本号
     </h1>
   
 
         
-        <a href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-05T06:14:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-05</time>
+        <a href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/" class="archive-article-date">
+  	<time datetime="2020-12-07T13:54:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中大量用到了 Java Stream 的流式写法，自己又不是用得特别6，所以整体复习下这块。</p>
-<h2 id="Java-Stream-中的所有函数"><a href="#Java-Stream-中的所有函数" class="headerlink" title="Java Stream 中的所有函数"></a>Java Stream 中的所有函数</h2><p>整理了下 Stream 类的所有 API 和工作中使用最多的几个：</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天解决公司项目一个关于乐观锁的 bug。因为在不同项目上遇到过2次了，特意记录一下。</p>
+<p>业务背景：</p>
+<p><img src="/images/version.png" alt="屏幕快照 2020-12-07 下午9.46.13.png"></p>
 <a id="more"></a>
 
-<p><img src="/images/javastream.png" alt="屏幕快照 2020-12-05 下午2.07.50.png"></p>
-<p>举例一下这些常用的，顾名思义的一些函数就不解释了：</p>
-<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>为什么 map 被用得这么多？map 的主要功能是，原来的链表的每个元素可以按照规则变成相应的元素。</p>
-<p>所以可以看出我们业务经常是需要转类型的，比如说：</p>
-<ol>
-<li>入参传入一个 <code>List&lt;Student&gt;</code> ，那么最后我需要的是 <code>List&lt;String&gt;</code>，其中元素为Student 的id，那么这个时候就可以使用到 map 了。</li>
-<li>再比如说DTO的转化，入参<code>List&lt;Student&gt;</code>，需要返回 <code>List&lt;Teacher&gt;</code>，那么也可以使用map，然后map 中执行一个函数，获取到学生的老师即可。</li>
+<p>原因：因为线程1 update 的时候，先从数据库 select DO 对象，然后因为要做业务操作，所以 DO 对象转化为 Domain 对象，最后 update 的时候，再从 Domain 对象转化为 DO 对象，这个过程中，version 就丢失了。</p>
+<p>解决办法：Domain 对象也传递 version 即可。</p>
+<h2 id="其他要注意"><a href="#其他要注意" class="headerlink" title="其他要注意"></a>其他要注意</h2><p><img src="/images/version1.png" alt="version1.png"></p>
+<p><code>@Version</code> 可以防止红线内的并发问题，但是一旦 select 操作不在红线内，则依然可能会出现并发问题。</p>
+<p>所以用 <code>@Version</code> 乐观锁还是要小心点，画画流程图，看看究竟能不能防并发，或者尤其要注意，是不是只能防住部分场景，有一些防不了。</p>
+<h2 id="Version-原理"><a href="#Version-原理" class="headerlink" title="@Version 原理"></a><code>@Version</code> 原理</h2><ol>
+<li>select 的时候，会 select 出一个 version，例如select uid,name,version from user where uid=1;</li>
+<li>再进行更新的时候，会 update user set name=’abc’, version=version+1 where uid=1 and version=1</li>
 </ol>
-<h2 id="mapToLong"><a href="#mapToLong" class="headerlink" title="mapToLong"></a>mapToLong</h2><p>和上述的 map 差不多的，那为什么要用 mapToLong 呢，主要是执行完 mapToLong 可以返回一个 LongStream，然后可以继续执行类似 <code>.sum()</code> 这些方法了， map 由于不是返回这种类型，所以没法继续 <code>.sum()</code> 下去。</p>
-<h2 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h2><p>这里可以参考 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26684562/whats-the-difference-between-map-and-flatmap-methods-in-java-8#:~:text=flatMap%20%2C%20as%20it%20can%20be,stream%20without%20flattening%20the%20stream">What’s the difference between map() and flatMap() methods in Java 8? </a></p>
-<blockquote>
-<p>Both map and flatMap can be applied to a Stream<T> and they both return a Stream<R>. The difference is that the map operation produces one output value for each input value, whereas the flatMap operation produces an arbitrary number (zero or more) values for each input value.</p>
-</blockquote>
-<p>也就是说，map 的话，只能1对1，进来来1个，就转出去1个。但是对于 flatMap，就可以进来1个元素，返回10个元素，这样1对多的返回回去。  </p>
-<p>再举个例子，入参是这样 <code>List&lt;Student&gt; student;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Student &#123;</span><br><span class="line">    private List&lt;Teacher&gt; teacherList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后你要拿到所有的 teacher 列表，所以这个时候就要用 flatMap，写法上可以这样写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.stream()</span><br><span class="line">.map(stu -&gt; stu.getTeacherList())</span><br><span class="line">.flatMap(Collection::stream)</span><br></pre></td></tr></table></figure>
-
-<p>这样这个流就是全部的 teacher 的。</p>
-<h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h2><p>主要用于把Stream 元素组合起来。例如有 <code>list = &#123;1d,2d,3d,4d,5d&#125;</code> ，要加和，那么就可以使用 reduce，然后再使用 <code>.reduce(0, Double::sum)</code> ，最后返回 double 类型的一个和。所以说，把Stream 元素组合起来 就是这个意思。</p>
+<p>对于乐观锁来说，如果有并发的场景，由于每个事务 update 都会 version+1，其他事务再更新的时候，由于 version 已经改变，所以 update 的时候即会失败。</p>
 
       
 
@@ -241,18 +232,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Version乐观锁的坑-domain层转化丢失version版本号
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">踩坑：SpringBoot的@Async注解同一个类中调用不生效</div>
+    <a href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">工作总结：JavaStream流式写法</div>
       <i class="icon-circle-right"></i>
     </a>
   
