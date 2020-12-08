@@ -161,6 +161,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-工作总结：分布式-多实例调度的一些实际经验和思考" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/">工作总结：分布式-多实例调度的一些实际经验和思考</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/" class="archive-article-date">
+  	<time datetime="2020-12-08T13:22:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天公司同事在讨论多实例调度的一些事情，再想以前的经验能不能套用上。但想了想，现在这个项目的使用场景比起以前更加严格，所以特地思考总结一下多实例调度在实际中的一些考虑点。</p>
+<h2 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h2><p>之前工作遇到过这样的场景：</p>
+<ol>
+<li>数据量：很大</li>
+<li><code>实时性要求：对数据的处理不要求实时，也就是这批数据可以延后处理。</code></li>
+<li>数据需要按照时间顺序执行，不能并发。</li>
+</ol>
+<p>这种情况下一般都希望用到集群多实例的能力。方案其实也并不复杂：</p>
+<ol>
+<li>拆分</li>
+<li>拆分</li>
+<li>再拆分</li>
+<li>最后拆分到不同实例去执行。</li>
+</ol>
+        
+          <a class="article-more-a" href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-LeetCode-栈类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -815,82 +900,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-扫盲：QueryDSL" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/29/%E6%89%AB%E7%9B%B2%EF%BC%9AQueryDSL/">扫盲：MapStruct</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/29/%E6%89%AB%E7%9B%B2%EF%BC%9AQueryDSL/" class="archive-article-date">
-  	<time datetime="2020-11-29T10:12:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作参与了个新项目，使用了 MapStruct。之前项目没怎么用过这个，所以这里扫下盲。</p>
-<h2 id="MapStruct-作用和使用场景"><a href="#MapStruct-作用和使用场景" class="headerlink" title="MapStruct 作用和使用场景"></a>MapStruct 作用和使用场景</h2><p>参考官网：<a target="_blank" rel="noopener" href="https://mapstruct.org/">MapStruct – Java bean mappings, the easy way!</a></p>
-<blockquote>
-<p>MapStruct is a code generator that greatly simplifies the implementation of mappings between Java bean types based on a convention over configuration approach. The generated mapping code uses plain method invocations and thus is fast, type-safe and easy to understand.</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2020/11/29/%E6%89%AB%E7%9B%B2%EF%BC%9AQueryDSL/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
         		</li>
       		
 		</ul>

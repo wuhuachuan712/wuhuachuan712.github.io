@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020/12 | 浮亮2021的博客</title>
+  <title>工作总结：分布式-多实例调度的一些实际经验和思考 | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hello1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="浮亮2021的博客">
-<meta property="og:url" content="http://example.com/archives/2020/12/index.html">
+  <meta name="description" content="前言今天公司同事在讨论多实例调度的一些事情，再想以前的经验能不能套用上。但想了想，现在这个项目的使用场景比起以前更加严格，所以特地思考总结一下多实例调度在实际中的一些考虑点。 场景一之前工作遇到过这样的场景：  数据量：很大 实时性要求：对数据的处理不要求实时，也就是这批数据可以延后处理。 数据需要按照时间顺序执行，不能并发。  这种情况下一般都希望用到集群多实例的能力。方案其实也并不复杂：  拆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工作总结：分布式-多实例调度的一些实际经验和思考">
+<meta property="og:url" content="http://example.com/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="hello1">
+<meta property="og:description" content="前言今天公司同事在讨论多实例调度的一些事情，再想以前的经验能不能套用上。但想了想，现在这个项目的使用场景比起以前更加严格，所以特地思考总结一下多实例调度在实际中的一些考虑点。 场景一之前工作遇到过这样的场景：  数据量：很大 实时性要求：对数据的处理不要求实时，也就是这批数据可以延后处理。 数据需要按照时间顺序执行，不能并发。  这种情况下一般都希望用到集群多实例的能力。方案其实也并不复杂：  拆">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/discall.png">
+<meta property="article:published_time" content="2020-12-08T13:22:24.000Z">
+<meta property="article:modified_time" content="2020-12-08T13:23:16.493Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="工作中的一些问题和总结">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/discall.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -159,36 +164,83 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-工作总结：分布式-多实例调度的一些实际经验和思考" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      工作总结：分布式-多实例调度的一些实际经验和思考
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/" class="archive-article-date">
+
+        
+        <a href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/" class="archive-article-date">
   	<time datetime="2020-12-08T13:22:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/">工作总结：分布式-多实例调度的一些实际经验和思考</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天公司同事在讨论多实例调度的一些事情，再想以前的经验能不能套用上。但想了想，现在这个项目的使用场景比起以前更加严格，所以特地思考总结一下多实例调度在实际中的一些考虑点。</p>
+<h2 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h2><p>之前工作遇到过这样的场景：</p>
+<ol>
+<li>数据量：很大</li>
+<li><code>实时性要求：对数据的处理不要求实时，也就是这批数据可以延后处理。</code></li>
+<li>数据需要按照时间顺序执行，不能并发。</li>
+</ol>
+<p>这种情况下一般都希望用到集群多实例的能力。方案其实也并不复杂：</p>
+<ol>
+<li>拆分</li>
+<li>拆分</li>
+<li>再拆分</li>
+<li>最后拆分到不同实例去执行。</li>
+</ol>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<p>中间使用 MQ 或者 RPC 的方式进行调用，负载均衡利用 api gateway 中间件的能力。如下图所示：</p>
+<p><img src="/images/discall.png" alt="discall.png"></p>
+<p>这种方案好处在于，理解起来并不复杂。但是一个问题在于：</p>
+<ol>
+<li>可能存在性能浪费，比如说处理数据花了 40s，定时任务每分钟执行，那么剩下这 20s 就浪费掉了。</li>
+<li>不知道哪个数据在哪个机器上执行，排查问题可能存在一定困难。比如说，发现某个数据一直没被处理，那么是代码异常？数据异常？日志究竟在哪台机器上？</li>
+</ol>
+<p>在我当时的项目上，由于实时性要求不高，所以这些性能浪费就浪费了，再执行多1分钟就好了，没什么问题。二是有平台统一的日志，以及监控系统。</p>
+<h2 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h2><p>今天项目的场景更加严格。</p>
+<ol>
+<li>数据量：同样很大</li>
+<li><code>实时性要求：要求尽可能实时，不能像上述处理一下，削峰填谷，晚2个小时处理完也可以，这个场景不行。</code></li>
+<li>数据需要按照时间顺序执行，不能并发。和上述一样。</li>
+</ol>
+<p>有实时性要求意味着上述说的浪费 20s 这个是不允许的。另外，考虑这样一种场景：</p>
+<ol>
+<li>定时任务 trigger 的时候，select DB 表刚好没有数据，select 完后就有数据了。</li>
+<li>白等1分钟。</li>
+</ol>
+<p>这就会有更大的性能浪费。</p>
+<p>同事提出了一种方案：</p>
+<blockquote>
+<p>定时任务相当于一个 trigger，只要 trigegr 了，任务就在实例之间类似 <code>while(true)</code> 循环到处跑，在这个实例完成了一个批次的任务，就跑去另外一个实例执行下一个批次任务。</p>
+</blockquote>
+<p>好处：能最大程度的利用性能。（当然会有一些细节的补充，但大体思路是这样）</p>
+<h3 id="个人的感觉"><a href="#个人的感觉" class="headerlink" title="个人的感觉"></a>个人的感觉</h3><p>个人还是偏向于使用第一种方法，主要是因为：</p>
+<ol>
+<li>性能浪费可能没有想象中的严重</li>
+<li>架构更加简单可控</li>
+</ol>
+<p>关于性能的浪费这个点，个人觉得，首先每分钟执行，一个机器能处理多少，可以通过压测拿到一个值，应该不至于有想象中的那么严重的性能浪费。</p>
+<p>第二个性能浪费的点在于，可能会白等1分钟。但是本身这种场景应对的是大数据量，所以这种情况（出现空表）不太可能存在。如果在平时，那么可以缩短定时任务的时间。</p>
+<h2 id="如何验证哪种架构方案的性能更好-或者某种方案提高多少性能"><a href="#如何验证哪种架构方案的性能更好-或者某种方案提高多少性能" class="headerlink" title="如何验证哪种架构方案的性能更好,或者某种方案提高多少性能"></a>如何验证哪种架构方案的性能更好,或者某种方案提高多少性能</h2><p>压测。同样的机器，同样的数据，原来的方法需要处理多长时间，现在新方案处理需要多长的时间。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,247 +252,55 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-12-08T00:19:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">LeetCode:栈类型</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/">LeetCode:栈类型</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/LeetCode-Tree%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-12-08T00:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/LeetCode-Tree%E7%B1%BB%E5%9E%8B/">LeetCode:Tree类型</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-12-07T13:54:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/">Version乐观锁的坑-domain层转化丢失version版本号</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-05T06:14:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/">工作总结：JavaStream流式写法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" class="archive-article-date">
-  	<time datetime="2020-12-04T12:56:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/">踩坑：SpringBoot的@Async注解同一个类中调用不生效</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-12-04T11:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/">个人健身动作整理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">随便写写</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -463,8 +323,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
