@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020 | 浮亮2021的博客</title>
+  <title>常见排序算法2-快排归并堆排序 | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hello1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="浮亮2021的博客">
-<meta property="og:url" content="http://example.com/archives/2020/index.html">
+  <meta name="description" content="快速排序思想：通过一趟排序将排序的数据分割成两个部分，其中一部分的所有数据都比另一部分的所有数据都要小，然后再按此方法对这两部分分别再进行快速排序，依次类推。实现为：  开始时先设两个变量 i&#x3D;Start,j&#x3D;End; 以第一个元素作为中间点，pivot&#x3D;num[i]; 以 j-- 的形式从后向前搜索，找到第一个比pivot小的，则将 num[i] &#x3D; num[j] 以 i++ 的形式从前向后搜索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见排序算法2-快排归并堆排序">
+<meta property="og:url" content="http://example.com/2020/12/09/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%952-%E5%BF%AB%E6%8E%92%E5%BD%92%E5%B9%B6%E5%A0%86%E6%8E%92%E5%BA%8F/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="hello1">
+<meta property="og:description" content="快速排序思想：通过一趟排序将排序的数据分割成两个部分，其中一部分的所有数据都比另一部分的所有数据都要小，然后再按此方法对这两部分分别再进行快速排序，依次类推。实现为：  开始时先设两个变量 i&#x3D;Start,j&#x3D;End; 以第一个元素作为中间点，pivot&#x3D;num[i]; 以 j-- 的形式从后向前搜索，找到第一个比pivot小的，则将 num[i] &#x3D; num[j] 以 i++ 的形式从前向后搜索">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-09T07:52:53.000Z">
+<meta property="article:modified_time" content="2020-12-09T07:53:32.585Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
   
   
@@ -159,36 +162,77 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-常见排序算法2-快排归并堆排序" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      常见排序算法2-快排归并堆排序
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/09/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%952-%E5%BF%AB%E6%8E%92%E5%BD%92%E5%B9%B6%E5%A0%86%E6%8E%92%E5%BA%8F/" class="archive-article-date">
+
+        
+        <a href="/2020/12/09/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%952-%E5%BF%AB%E6%8E%92%E5%BD%92%E5%B9%B6%E5%A0%86%E6%8E%92%E5%BA%8F/" class="archive-article-date">
   	<time datetime="2020-12-09T07:52:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/09/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%952-%E5%BF%AB%E6%8E%92%E5%BD%92%E5%B9%B6%E5%A0%86%E6%8E%92%E5%BA%8F/">常见排序算法2-快排归并堆排序</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>思想：通过一趟排序将排序的数据分割成两个部分，其中一部分的所有数据都比另一部分的所有数据都要小，然后再按此方法对这两部分分别再进行快速排序，依次类推。实现为：</p>
+<ol>
+<li>开始时先设两个变量 <code>i=Start,j=End;</code></li>
+<li>以第一个元素作为中间点，<code>pivot=num[i];</code></li>
+<li>以 <code>j--</code> 的形式从后向前搜索，找到第一个比pivot小的，则将 <code>num[i] = num[j]</code></li>
+<li>以 <code>i++</code> 的形式从前向后搜索，找到第一个比pivot大的，则将<code>num[j]=num[i];</code></li>
+<li>不断重复3,4，直到 <code>i=j</code> ，最后使得 <code>num[i]=pivot;</code></li>
+</ol>
+<p>这样就可以把小于pivot的值全部放在pivot前面，把大于pivot的值全部放在pivot后面。</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private static void quickSort(int num[], int start, int end) &#123;</span><br><span class="line">    int i &#x3D; start;</span><br><span class="line">    int j &#x3D; end;</span><br><span class="line">    int flag &#x3D; num[start];</span><br><span class="line">    while (i &lt; j) &#123;</span><br><span class="line">        while ((i &lt; j) &amp;&amp; (num[j] &gt;&#x3D; flag)) j--;</span><br><span class="line">        num[i] &#x3D; num[j];</span><br><span class="line">        while ((i &lt; j) &amp;&amp; (num[i] &lt;&#x3D; flag)) i++;</span><br><span class="line">        num[j] &#x3D; num[i];</span><br><span class="line">    &#125;</span><br><span class="line">    num[i] &#x3D; flag;</span><br><span class="line">    if (i - start &gt; 1) quickSort(num, start, i - 1);</span><br><span class="line">    if (end - i &gt; 1) quickSort(num, i + 1, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>平均时间复杂度：O(nlogn)</li>
+<li>最坏时间复杂度：O(n^2)。比如已经是升序的序列转换为降序。</li>
+<li>稳定性：它也是一个不稳定的算法。</li>
+</ul>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>思想：将两个或者两个以上的有序表合并成一个新的有序表。设定两个指针，最初位置分别为两个已经排序序列的起始位置，然后比较两个指针所指向的元素，选择相对小的放入合并空间，并移动指针到下一位置，之后重复上述的步骤，直到达到某一序列的序列尾，最后将另一个序列的剩余所有元素直接复制到合并序列尾部。</p>
+<p>举例：</p>
+<p>比如 <code>5,4,6,2,3,1</code>，首先找出中间索引，<code>center=（left+right）/2=（0+5）/2=2；</code>进行分组直到 <code>left&gt;=right</code> 则分组停止</p>
+<ol>
+<li>进行分组<code>（left，center）</code>为一组，<code>（center+1，right）</code> 为一组，所以 <code>&#123;5,4,6&#125;</code> 为一组，<code>&#123;2,3,1&#125;</code> 为一组。</li>
+<li>再进行分组，对于 <code>&#123;5,4,6&#125;,center=(0+2)/2=1 </code>,所以分为<code>&#123;5&#125;,&#123;4,6&#125;</code>，对于 <code>&#123;2,3,1&#125;</code> 同理分为<code>&#123;2&#125;,&#123;3,1&#125;</code></li>
+<li>然后进行归并排序，对 <code>&#123;5&#125;&#123;4,6&#125;</code> 进行归并排序，用两个指针的形式，归并后为 <code>&#123;4,5,6&#125;</code>,同理，对 <code>&#123;2&#125;,&#123;3,1&#125;</code> 进行归并排序，排序后为<code>&#123;1,2,3&#125;</code></li>
+<li>再对 <code>&#123;4,5,6&#125;&#123;1,2,3&#125;</code> 进行归并排序，归并后为<code>&#123;1,2,3,4,5,6&#125;</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">private static void mergeSort(int[] nums, int[] temp, int left, int right) &#123;</span><br><span class="line">    if (left &gt;&#x3D; right) return;</span><br><span class="line"></span><br><span class="line">    int center &#x3D; left + (right - left) &#x2F; 2;</span><br><span class="line">    mergeSort(nums, temp, left, center);</span><br><span class="line">    mergeSort(nums, temp, center + 1, right);</span><br><span class="line"></span><br><span class="line">    doMerge(nums, temp, left, center, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void doMerge(int[] nums, int[] temp, int left, int center, int right) &#123;</span><br><span class="line">    int tempIdx &#x3D; left;</span><br><span class="line">    int p1 &#x3D; left;</span><br><span class="line">    int p2 &#x3D; center + 1;</span><br><span class="line">    while (p1 &lt;&#x3D; center &amp;&amp; p2 &lt;&#x3D; right) &#123;</span><br><span class="line">        temp[tempIdx++] &#x3D; nums[p1] &lt;&#x3D; nums[p2] ? nums[p1++] : nums[p2++];</span><br><span class="line">    &#125;</span><br><span class="line">    while (p1 &lt;&#x3D; center) temp[tempIdx++] &#x3D; nums[p1++];</span><br><span class="line">    while (p2 &lt;&#x3D; right) temp[tempIdx++] &#x3D; nums[p2++];</span><br><span class="line">    for (int i &#x3D; left; i &lt;&#x3D; right; ++i) &#123;</span><br><span class="line">        nums[i] &#x3D; temp[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>平均/最坏时间复杂度：O(nlogn)</li>
+<li>空间复杂度：O(n)</li>
+<li>稳定性：它是一个稳定的算法。</li>
+</ul>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p>堆的定义：堆是一种近似完全二叉树的结构，它又分为大根堆和小根堆，如果是大根堆，意味着子节点的键值总是小于它的父节点。左右孩子节点之间并没有什么限制。</p>
+<p>思想：先将初始序列构造成一个大根堆（或者小根堆），此堆为初始无序区。再将最大记录R[1]与无序区的最后一个记录R[n]交换，由此可以得到新的无序区R[1….n-1]和有序区R[n]。由于交换之后新的根R[1]可能不满足大根堆的性质，故将当前无序区R[1…n-1]再次调整为堆，然后再次将R[1]与R[n-1]交换，依次类推。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">private static void heapSort(int[] nums) &#123;</span><br><span class="line">    for (int i &#x3D; nums.length &#x2F; 2 - 1; i &gt;&#x3D; 0; --i) &#123;</span><br><span class="line">        createHeap(nums, nums.length, i);</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i &#x3D; nums.length - 1; i &gt;&#x3D; 0; --i) &#123;</span><br><span class="line">        swap(nums, 0, i);</span><br><span class="line">        createHeap(nums, i, 0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void createHeap(int[] nums, int unSortedSize, int rootIdx) &#123;</span><br><span class="line">    int flagRootIdx &#x3D; rootIdx;</span><br><span class="line">    int leftChildIdx &#x3D; 2 * rootIdx + 1;</span><br><span class="line">    int rightChildIdx &#x3D; 2 * rootIdx + 2;</span><br><span class="line"></span><br><span class="line">    if (leftChildIdx &lt; unSortedSize &amp;&amp; nums[leftChildIdx] &gt; nums[rootIdx]) &#123;</span><br><span class="line">        rootIdx &#x3D; leftChildIdx;</span><br><span class="line">    &#125;</span><br><span class="line">    if (rightChildIdx &lt; unSortedSize &amp;&amp; nums[rightChildIdx] &gt; nums[rootIdx]) &#123;</span><br><span class="line">        rootIdx &#x3D; rightChildIdx;</span><br><span class="line">    &#125;</span><br><span class="line">    if (rootIdx !&#x3D; flagRootIdx) &#123;</span><br><span class="line">        swap(nums, rootIdx, flagRootIdx);</span><br><span class="line">        createHeap(nums, unSortedSize, rootIdx);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>平均/最坏时间复杂度：O(nlogn)</li>
+<li>空间复杂度：O(1)</li>
+<li>稳定性：它是一个不稳定的算法。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,364 +244,54 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/09/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%951-%E5%86%92%E6%B3%A1%E9%80%89%E6%8B%A9%E6%8F%92%E5%85%A5%E5%B8%8C%E5%B0%94/" class="archive-article-date">
-  	<time datetime="2020-12-09T01:55:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-09</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/09/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%951-%E5%86%92%E6%B3%A1%E9%80%89%E6%8B%A9%E6%8F%92%E5%85%A5%E5%B8%8C%E5%B0%94/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">常见排序算法1-冒泡选择插入希尔</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/09/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%951-%E5%86%92%E6%B3%A1%E9%80%89%E6%8B%A9%E6%8F%92%E5%85%A5%E5%B8%8C%E5%B0%94/">常见排序算法1-冒泡选择插入希尔</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/" class="archive-article-date">
-  	<time datetime="2020-12-08T13:22:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F-%E5%A4%9A%E5%AE%9E%E4%BE%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E7%BB%8F%E9%AA%8C%E5%92%8C%E6%80%9D%E8%80%83/">工作总结：分布式-多实例调度的一些实际经验和思考</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-12-08T00:19:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/">LeetCode:栈类型</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/LeetCode-Tree%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-12-08T00:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/LeetCode-Tree%E7%B1%BB%E5%9E%8B/">LeetCode:Tree类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-12-07T13:54:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/">Version乐观锁的坑-domain层转化丢失version版本号</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-05T06:14:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/">工作总结：JavaStream流式写法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" class="archive-article-date">
-  	<time datetime="2020-12-04T12:56:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/">踩坑：SpringBoot的@Async注解同一个类中调用不生效</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-12-04T11:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/">个人健身动作整理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">随便写写</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/30/%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%80%E8%88%AC%E8%AE%A8%E8%AE%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-11-30T12:10:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/30/%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%80%E8%88%AC%E8%AE%A8%E8%AE%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/">物理层一般讨论什么问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">一些基础知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="extend next" rel="next" href="/archives/2020/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -581,8 +315,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
