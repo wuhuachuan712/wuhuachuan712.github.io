@@ -161,6 +161,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-OCP开闭原则的项目使用反思" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/12/OCP%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%80%9D/">OCP开闭原则的项目使用反思</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/12/OCP%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%80%9D/" class="archive-article-date">
+  	<time datetime="2020-12-12T04:17:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近看了 OCP 相关的知识，想借此反思一下自己做过的项目，如果再给我做一遍，应该要如何设计。</p>
+<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>通常所说的设计原则有 SOLID 五个，其中的 O 就是 OCP，Open-Close Principle 的简称，也就是开闭原则。开闭原则主要是：<code>对扩展开放，对修改封闭</code>。通常来讲，就是新增一个功能，不要修改，影响到原来的功能。</p>
+<p>通常我们的做法一般是使用多态，多态也就是，<code>指针指向父类，实际对象是子类，用的也是子类的方法。``策略模式</code> 就是开闭原则的一种很好的实现。</p>
+<h2 id="自己做过的项目"><a href="#自己做过的项目" class="headerlink" title="自己做过的项目"></a>自己做过的项目</h2><p>业务背景：用户可以随时随地购买，赎回银行的理财产品。</p>
+<p>变化点：这里可以看到，变化点就是：购买，赎回。根据以前的相关经验，后续业务很可能会演化出冻结，解冻的用户行为。（类似理财产品还未开始，你此时加入了，会有 xx 天的资金冻结期）</p>
+        
+          <a class="article-more-a" href="/2020/12/12/OCP%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%80%9D/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">System-Design</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-《编程的逻辑》读后感" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -820,87 +896,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-个人健身动作整理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/">个人健身动作整理</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-12-04T11:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里整理一下自己的健身计划，包括动作，每个部位大约6个动作，每个动作可以做 4-5组，基本1个小时了，收工回家。主要参考了：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/265453614/answer/453124600">如何有效锻炼上背部肌肉？</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21471812/answer/444855129">男生如何练出胸肌？</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/30569024/answer/1314957854">臀部两侧凹陷是因为臀中肌不发达吗？</a></li>
-<li><a target="_blank" rel="noopener" href="https://weibo.com/ttarticle/p/show?id=2309404120071214654255&sudaref=www.google.com">【精品】腿部肌肉大解析</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20770313/answer/689836642">如何完成标准的硬拉？</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42322788">肩部肌肉应该怎么练 （地表最强练肩攻略）</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27541793/answer/641567557">如何锻炼手臂肌肉？</a></li>
-</ol>
-        
-          <a class="article-more-a" href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">随便写写</a>
         		</li>
       		
 		</ul>
