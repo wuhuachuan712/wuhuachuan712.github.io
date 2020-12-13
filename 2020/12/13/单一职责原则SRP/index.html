@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: System-Design | 浮亮2021的博客</title>
+  <title>单一职责原则SRP | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hello1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="浮亮2021的博客">
-<meta property="og:url" content="http://example.com/tags/System-Design/index.html">
+  <meta name="description" content="前言参考《敏捷软件开发：原则、模式与实践》，SRP 的定义是：  就一个类而言，应该仅有一个引起它变化的原因。  那么，现在问题就是，如何定义职责的范围。 职责的范围单一职责的范围，基于不同的维度，有很多划分的方式。我经历过的项目就有 2 种划分方式： 例如基于数据源，比如对于一个 Student 类，简单的对于这个实体的所有操作例如 CRUD 都扔到一个 service 类中（当然还有一些业务逻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单一职责原则SRP">
+<meta property="og:url" content="http://example.com/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="hello1">
+<meta property="og:description" content="前言参考《敏捷软件开发：原则、模式与实践》，SRP 的定义是：  就一个类而言，应该仅有一个引起它变化的原因。  那么，现在问题就是，如何定义职责的范围。 职责的范围单一职责的范围，基于不同的维度，有很多划分的方式。我经历过的项目就有 2 种划分方式： 例如基于数据源，比如对于一个 Student 类，简单的对于这个实体的所有操作例如 CRUD 都扔到一个 service 类中（当然还有一些业务逻">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-13T04:46:34.000Z">
+<meta property="article:modified_time" content="2020-12-13T04:47:15.694Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="System-Design">
 <meta name="twitter:card" content="summary">
   
   
@@ -159,36 +162,65 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-单一职责原则SRP" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      单一职责原则SRP
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/" class="archive-article-date">
+
+        
+        <a href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/" class="archive-article-date">
   	<time datetime="2020-12-13T04:46:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-13</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/">单一职责原则SRP</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>参考《敏捷软件开发：原则、模式与实践》，SRP 的定义是：</p>
+<blockquote>
+<p>就一个类而言，应该仅有一个引起它变化的原因。</p>
+</blockquote>
+<p>那么，现在问题就是，如何定义职责的范围。</p>
+<h2 id="职责的范围"><a href="#职责的范围" class="headerlink" title="职责的范围"></a>职责的范围</h2><p>单一职责的范围，基于不同的维度，有很多划分的方式。我经历过的项目就有 2 种划分方式：</p>
+<p>例如基于数据源，比如对于一个 Student 类，简单的对于这个实体的所有操作例如 CRUD 都扔到一个 service 类中（当然还有一些业务逻辑的业务方法）。</p>
+<p>例如基于业务的，每个业务操作就是一个 service，例如 CRUD 就是 4 个 service。</p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<p>缺点：</p>
+<ol>
+<li>基于数据源的，当时出现一个问题是：比如说有 TeacherService 和 StudentService，那么有一些符合操作，你说是放在 TeacherService 呢还是 StudentService 呢？</li>
+<li>基于业务的，当时出现的问题就是 service 类非常多。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>现在回过头来想：</p>
+<ol>
+<li>为什么要 SRP：为了面向对象，从而为了可扩展，可维护。</li>
+<li>变化点在哪些：变化点最多发生的地方就是业务逻辑的变化，对 DB 表单纯的 CRUD 基本变化不大的。</li>
+<li>service 类多有没有问题：没有什么问题。</li>
+</ol>
+<p>所以说，写类，写业务的时候，可以：</p>
+<ol>
+<li>对于一些简单的操作，例如 CRUD，可以基于数据源的职责划分方式，统一到一个类中就好了。</li>
+<li>对于一些有业务逻辑，业务流程的操作，就基于业务的职责划分方式，就可以抽出 xxxService 专门只处理这个业务流程。</li>
+<li>service 可以根据具体业务流程来命名，至于说 controller，这个可以参考业务上的领域划分。</li>
+</ol>
+<h2 id="Bad-Smell"><a href="#Bad-Smell" class="headerlink" title="Bad Smell"></a>Bad Smell</h2><ol>
+<li>一个类中，即有很简单的操作，类似 CRUD 基本不变的这些，又有很复杂的业务流程类的操作。</li>
+<li>一个类超过 300 行，一个方法超过 30 行左右。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,133 +232,55 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/12/OCP%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%80%9D/" class="archive-article-date">
-  	<time datetime="2020-12-12T04:17:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-12</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/12/12/OCP%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%80%9D/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">OCP开闭原则的项目使用反思</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/12/OCP%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%80%9D/">OCP开闭原则的项目使用反思</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">System-Design</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/10/%E3%80%8A%E7%BC%96%E7%A8%8B%E7%9A%84%E9%80%BB%E8%BE%91%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/" class="archive-article-date">
-  	<time datetime="2020-12-10T13:07:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/10/%E3%80%8A%E7%BC%96%E7%A8%8B%E7%9A%84%E9%80%BB%E8%BE%91%E3%80%8B%E8%AF%BB%E5%90%8E%E6%84%9F/">《编程的逻辑》读后感</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">System-Design</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/30/%E5%81%9A%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E7%82%B9/" class="archive-article-date">
-  	<time datetime="2020-11-30T12:03:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/30/%E5%81%9A%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E7%82%B9/">做一个需求需要考虑的点</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">System-Design</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -349,9 +303,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

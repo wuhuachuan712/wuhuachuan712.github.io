@@ -161,6 +161,85 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-单一职责原则SRP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/">单一职责原则SRP</a>
+    </h1>
+  
+
+        
+        <a href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/" class="archive-article-date">
+  	<time datetime="2020-12-13T04:46:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>参考《敏捷软件开发：原则、模式与实践》，SRP 的定义是：</p>
+<blockquote>
+<p>就一个类而言，应该仅有一个引起它变化的原因。</p>
+</blockquote>
+<p>那么，现在问题就是，如何定义职责的范围。</p>
+<h2 id="职责的范围"><a href="#职责的范围" class="headerlink" title="职责的范围"></a>职责的范围</h2><p>单一职责的范围，基于不同的维度，有很多划分的方式。我经历过的项目就有 2 种划分方式：</p>
+<p>例如基于数据源，比如对于一个 Student 类，简单的对于这个实体的所有操作例如 CRUD 都扔到一个 service 类中（当然还有一些业务逻辑的业务方法）。</p>
+<p>例如基于业务的，每个业务操作就是一个 service，例如 CRUD 就是 4 个 service。</p>
+        
+          <a class="article-more-a" href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">System-Design</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-OCP开闭原则的项目使用反思" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -809,79 +888,6 @@
 <h2 id="Java-Stream-中的所有函数"><a href="#Java-Stream-中的所有函数" class="headerlink" title="Java Stream 中的所有函数"></a>Java Stream 中的所有函数</h2><p>整理了下 Stream 类的所有 API 和工作中使用最多的几个：</p>
         
           <a class="article-more-a" href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-踩坑：SpringBoot的@Async注解同一个类中调用不生效" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/">踩坑：SpringBoot的@Async注解同一个类中调用不生效</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" class="archive-article-date">
-  	<time datetime="2020-12-04T12:56:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>项目启动的时候，需要执行一些业务逻辑。由于担心这段逻辑对项目启动有影响，特意在这个方法上加了 SpringBoot 的 <code>@Async</code> 注解，希望异步去执行，结果发现并没有起作用。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>改成手动 <code>new Thread</code> 的方式即可。</p>
-        
-          <a class="article-more-a" href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/#more">more >></a>
         
       
 
