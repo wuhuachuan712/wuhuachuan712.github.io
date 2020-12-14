@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>单一职责原则SRP | 浮亮2021的博客</title>
+  <title>DIP：依赖倒置原则的一些理解 | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言参考《敏捷软件开发：原则、模式与实践》，SRP 的定义是：  就一个类而言，应该仅有一个引起它变化的原因。  那么，现在问题就是，如何定义职责的范围。 职责的范围单一职责的范围，基于不同的维度，有很多划分的方式。我经历过的项目就有 2 种划分方式： 例如基于数据源，比如对于一个 Student 类，简单的对于这个实体的所有操作例如 CRUD 都扔到一个 service 类中（当然还有一些业务逻">
+  <meta name="description" content="copy 自己在知乎的一个回答： 依赖倒置模式java web 中dao 层和service层都使用接口，是否是为使用接口而使用接口？ 不是。参考《敏捷软件开发 原则、模式与实践》，其中的第11章 “依赖倒置模式”，就可以发现，java web 中dao 层和service层都使用接口，就是满足了这种设计原则。这种设计原则能更好的面向对象，能更好的可扩展，可维护。 依赖倒置模式：高层不依赖底层。一">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单一职责原则SRP">
-<meta property="og:url" content="http://example.com/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/index.html">
+<meta property="og:title" content="DIP：依赖倒置原则的一些理解">
+<meta property="og:url" content="http://example.com/2020/12/14/DIP%EF%BC%9A%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="前言参考《敏捷软件开发：原则、模式与实践》，SRP 的定义是：  就一个类而言，应该仅有一个引起它变化的原因。  那么，现在问题就是，如何定义职责的范围。 职责的范围单一职责的范围，基于不同的维度，有很多划分的方式。我经历过的项目就有 2 种划分方式： 例如基于数据源，比如对于一个 Student 类，简单的对于这个实体的所有操作例如 CRUD 都扔到一个 service 类中（当然还有一些业务逻">
+<meta property="og:description" content="copy 自己在知乎的一个回答： 依赖倒置模式java web 中dao 层和service层都使用接口，是否是为使用接口而使用接口？ 不是。参考《敏捷软件开发 原则、模式与实践》，其中的第11章 “依赖倒置模式”，就可以发现，java web 中dao 层和service层都使用接口，就是满足了这种设计原则。这种设计原则能更好的面向对象，能更好的可扩展，可维护。 依赖倒置模式：高层不依赖底层。一">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-12-13T04:46:34.000Z">
-<meta property="article:modified_time" content="2020-12-13T04:47:15.694Z">
+<meta property="article:published_time" content="2020-12-14T10:18:38.000Z">
+<meta property="article:modified_time" content="2020-12-14T10:19:12.943Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="System-Design">
 <meta name="twitter:card" content="summary">
@@ -162,57 +162,44 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-单一职责原则SRP" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-DIP：依赖倒置原则的一些理解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      单一职责原则SRP
+      DIP：依赖倒置原则的一些理解
     </h1>
   
 
         
-        <a href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/" class="archive-article-date">
-  	<time datetime="2020-12-13T04:46:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-13</time>
+        <a href="/2020/12/14/DIP%EF%BC%9A%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2020-12-14T10:18:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-14</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>参考《敏捷软件开发：原则、模式与实践》，SRP 的定义是：</p>
-<blockquote>
-<p>就一个类而言，应该仅有一个引起它变化的原因。</p>
-</blockquote>
-<p>那么，现在问题就是，如何定义职责的范围。</p>
-<h2 id="职责的范围"><a href="#职责的范围" class="headerlink" title="职责的范围"></a>职责的范围</h2><p>单一职责的范围，基于不同的维度，有很多划分的方式。我经历过的项目就有 2 种划分方式：</p>
-<p>例如基于数据源，比如对于一个 Student 类，简单的对于这个实体的所有操作例如 CRUD 都扔到一个 service 类中（当然还有一些业务逻辑的业务方法）。</p>
-<p>例如基于业务的，每个业务操作就是一个 service，例如 CRUD 就是 4 个 service。</p>
+        <p>copy 自己在知乎的一个回答：</p>
+<h2 id="依赖倒置模式"><a href="#依赖倒置模式" class="headerlink" title="依赖倒置模式"></a>依赖倒置模式</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/36021012/answer/1626713776">java web 中dao 层和service层都使用接口，是否是为使用接口而使用接口？</a></p>
+<p>不是。参考《敏捷软件开发 原则、模式与实践》，其中的第11章 “依赖倒置模式”，就可以发现，java web 中dao 层和service层都使用接口，就是满足了这种设计原则。这种设计原则能更好的面向对象，能更好的可扩展，可维护。</p>
+<p>依赖倒置模式：高层不依赖底层。一般认为领域模型，业务模型这些是高层；很具体的实现，例如用Mysql，还是Redis存储，用MD5，还是SHA-256加密，这些属于底层。那么底层改了，不影响高层，这很 make sense，没毛病。</p>
 <a id="more"></a>
 
-<p>缺点：</p>
-<ol>
-<li>基于数据源的，当时出现一个问题是：比如说有 TeacherService 和 StudentService，那么有一些符合操作，你说是放在 TeacherService 呢还是 StudentService 呢？</li>
-<li>基于业务的，当时出现的问题就是 service 类非常多。</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>现在回过头来想：</p>
-<ol>
-<li>为什么要 SRP：为了面向对象，从而为了可扩展，可维护。</li>
-<li>变化点在哪些：变化点最多发生的地方就是业务逻辑的变化，对 DB 表单纯的 CRUD 基本变化不大的。</li>
-<li>service 类多有没有问题：没有什么问题。</li>
-</ol>
-<p>所以说，写类，写业务的时候，可以：</p>
-<ol>
-<li>对于一些简单的操作，例如 CRUD，可以基于数据源的职责划分方式，统一到一个类中就好了。</li>
-<li>对于一些有业务逻辑，业务流程的操作，就基于业务的职责划分方式，就可以抽出 xxxService 专门只处理这个业务流程。</li>
-<li>service 可以根据具体业务流程来命名，至于说 controller，这个可以参考业务上的领域划分。</li>
-</ol>
-<h2 id="Bad-Smell"><a href="#Bad-Smell" class="headerlink" title="Bad Smell"></a>Bad Smell</h2><ol>
-<li>一个类中，即有很简单的操作，类似 CRUD 基本不变的这些，又有很复杂的业务流程类的操作。</li>
-<li>一个类超过 300 行，一个方法超过 30 行左右。</li>
-</ol>
+<p>假如不用 DAO 接口，那么意思就是直接用类似 MysqlDaoImpl 这样是吧，那么 service 业务层，是不是要强耦合引入 MysqlDaoImpl 作为成员变量，那么假设，以后要把 MysqlDaoImpl 改成 RedisDaoImpl 用 redis 来存储，是不是要改 service 层的东西，起码要把 MysqlDaoImpl 换掉，把用 MysqlDaoImpl 的地方改掉。这样一改，能 100% 保证不改坏别的东西吗？动了就有风险，有风险，那么就不能说非常的 “可维护” 了。</p>
+<p>其实这样也很明显看到，service 已经强依赖 MysqlDaoImpl，高层依赖底层，这其实就很违反 “依赖倒置模式”了。</p>
+<p>所以这里希望加一个 DAO 接口，那么 service 引入的时候，只引入 DAO 接口就行了。以后需要把 Mysql 换成 Redis，因为 service 层用的是接口，所以 service 层这里完全不需要动。这样不就是所说的可维护了么。</p>
+<h2 id="现实"><a href="#现实" class="headerlink" title="现实"></a>现实</h2><p>从个人的做的实际项目上看（有大项目也有小项目）：</p>
+<p>1、我们经常把 dao 和 daoImpl 看成是一组，其实从《敏捷软件开发 原则、模式与实践》这本书上看是有点不对的。dao 接口其实是 service 层的东西，dao 接口应该是 service 暴露出去的接口，由 daoImpl 实现，dao 接口，这个名字起得不好，应该叫 serviceDao 才好。（不过个人感觉也不太重要，不管黑猫白猫，抓到老鼠就是好猫）</p>
+<p>2、实际编程中，我们经常在 service 层虽然不会直接引入 MysqlDaoImpl 实现层作为成员变量，但是一般都会引入 MysqlDao 接口作为成员变量。那么实际要换 Redis 的时候也是要改动 service 层的，起码 service 层不能出现 mysql 这 5 个字符。那和上面说的不需要改，不是相违背吗？</p>
+<p>个人觉得这是因为开发懒。service 层理论上就不应该引入 MysqlDao 作为成员变量，而是要引入类似 DatasourceDao 这样的接口，然后 MysqlDatasourceDaoImpl，RedisDatasourceDao Impl去实现它。</p>
+<p>至于说业务代码怎么选用哪个 DataSource，那又是另外一个问题了：如何开闭，当然也有其他的解决办法去解决怎么选用哪个 DataSource这个问题。</p>
+<p>这里主要还是考虑到工作量和风险。一般来说，service 层我们直接把 MysqlDao 改成 RedisDao，再把调用点换一下，一般来说，风险不大，风险可控，你要是愿意加班搞一套设计模式在service层解决怎么选用哪个 DataSource这个问题我也没意见，前提是不能拉上我加班~~。而且 service 直接看见 Mysql 这 5 个字符，我理解代码也更快，不用再去想想，我是用什么DB来着。</p>
+<p>所以现况就是这样子了：应用了”依赖倒置原则”，但是又用得不彻底。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>不用接口，首先一点，就是不符合依赖倒置原则；你要是说，在这个点上，用依赖倒置原则能产生多大收益，我也说不过你。</p>
+<p>不过这么久以来大家都是这样玩的，你突然不用接口，难免怪怪的，大家理解一致，容易理解，看得顺眼，这才是可维护呢~</p>
 
       
 
@@ -245,18 +232,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/14/DIP%EF%BC%9A%E4%BE%9D%E8%B5%96%E5%80%92%E7%BD%AE%E5%8E%9F%E5%88%99%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          DIP：依赖倒置原则的一些理解
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/12/12/OCP%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BD%BF%E7%94%A8%E5%8F%8D%E6%80%9D/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">OCP开闭原则的项目使用反思</div>
+    <a href="/2020/12/13/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99SRP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单一职责原则SRP</div>
       <i class="icon-circle-right"></i>
     </a>
   
