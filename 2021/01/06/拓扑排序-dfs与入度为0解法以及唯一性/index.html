@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>工作总结：JavaStream流式写法 | 浮亮2021的博客</title>
+  <title>拓扑排序-dfs与入度为0解法以及唯一性 | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言工作中大量用到了 Java Stream 的流式写法，自己又不是用得特别6，所以整体复习下这块。 Java Stream 中的所有函数整理了下 Stream 类的所有 API 和工作中使用最多的几个：">
+  <meta name="description" content="前言想看看图相关的知识，看到了《算法导论》中22章的图基本算法的拓扑排序，这里想总结下。 主要包括：  什么是拓扑排序和解决的问题 《算法导论》中的解法 入度为0的解法 所有可能的拓扑排序,该拓扑排序的唯一性问题 LeetCode 的题目">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工作总结：JavaStream流式写法">
-<meta property="og:url" content="http://example.com/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/index.html">
+<meta property="og:title" content="拓扑排序-dfs与入度为0解法以及唯一性">
+<meta property="og:url" content="http://example.com/2021/01/06/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F-dfs%E4%B8%8E%E5%85%A5%E5%BA%A6%E4%B8%BA0%E8%A7%A3%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%94%AF%E4%B8%80%E6%80%A7/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="前言工作中大量用到了 Java Stream 的流式写法，自己又不是用得特别6，所以整体复习下这块。 Java Stream 中的所有函数整理了下 Stream 类的所有 API 和工作中使用最多的几个：">
+<meta property="og:description" content="前言想看看图相关的知识，看到了《算法导论》中22章的图基本算法的拓扑排序，这里想总结下。 主要包括：  什么是拓扑排序和解决的问题 《算法导论》中的解法 入度为0的解法 所有可能的拓扑排序,该拓扑排序的唯一性问题 LeetCode 的题目">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/javastream.png">
-<meta property="article:published_time" content="2020-12-05T06:14:47.000Z">
-<meta property="article:modified_time" content="2020-12-05T06:19:07.695Z">
+<meta property="article:published_time" content="2021-01-06T04:35:01.000Z">
+<meta property="article:modified_time" content="2021-01-06T04:36:51.091Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="工作中的一些问题和总结">
+<meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/javastream.png">
   
   
     <link rel="icon" href="/favicon.png">
@@ -164,51 +162,82 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-工作总结：JavaStream流式写法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-拓扑排序-dfs与入度为0解法以及唯一性" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      工作总结：JavaStream流式写法
+      拓扑排序-dfs与入度为0解法以及唯一性
     </h1>
   
 
         
-        <a href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-05T06:14:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-05</time>
+        <a href="/2021/01/06/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F-dfs%E4%B8%8E%E5%85%A5%E5%BA%A6%E4%B8%BA0%E8%A7%A3%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%94%AF%E4%B8%80%E6%80%A7/" class="archive-article-date">
+  	<time datetime="2021-01-06T04:35:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中大量用到了 Java Stream 的流式写法，自己又不是用得特别6，所以整体复习下这块。</p>
-<h2 id="Java-Stream-中的所有函数"><a href="#Java-Stream-中的所有函数" class="headerlink" title="Java Stream 中的所有函数"></a>Java Stream 中的所有函数</h2><p>整理了下 Stream 类的所有 API 和工作中使用最多的几个：</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想看看图相关的知识，看到了《算法导论》中22章的图基本算法的拓扑排序，这里想总结下。</p>
+<p>主要包括：</p>
+<ul>
+<li>什么是拓扑排序和解决的问题</li>
+<li>《算法导论》中的解法</li>
+<li>入度为0的解法</li>
+<li>所有可能的拓扑排序,该拓扑排序的唯一性问题</li>
+<li>LeetCode 的题目</li>
+</ul>
 <a id="more"></a>
 
-<p><img src="/images/javastream.png" alt="屏幕快照 2020-12-05 下午2.07.50.png"></p>
-<p>举例一下这些常用的，顾名思义的一些函数就不解释了：</p>
-<h2 id="map"><a href="#map" class="headerlink" title="map"></a>map</h2><p>为什么 map 被用得这么多？map 的主要功能是，原来的链表的每个元素可以按照规则变成相应的元素。</p>
-<p>所以可以看出我们业务经常是需要转类型的，比如说：</p>
+<h2 id="拓扑排序概念和解决的问题"><a href="#拓扑排序概念和解决的问题" class="headerlink" title="拓扑排序概念和解决的问题"></a>拓扑排序概念和解决的问题</h2><p>拓扑排序是针对 <code>有向无环图</code> 的一种线性排序。这个排序要满足这个条件：对于有向边 <code>(u,v)</code>，<code>u</code> 要在 <code>v</code> 的前面。</p>
+<p>它是可以用来解决需要使用有向无环图来 <code>指明事件的先后顺序</code>。</p>
+<p>例如说：</p>
 <ol>
-<li>入参传入一个 <code>List&lt;Student&gt;</code> ，那么最后我需要的是 <code>List&lt;String&gt;</code>，其中元素为Student 的id，那么这个时候就可以使用到 map 了。</li>
-<li>再比如说DTO的转化，入参<code>List&lt;Student&gt;</code>，需要返回 <code>List&lt;Teacher&gt;</code>，那么也可以使用map，然后map 中执行一个函数，获取到学生的老师即可。</li>
+<li>《算法导论》里提到的起床穿衣服的例子，先穿衣，再洗漱，再整理等等。</li>
+<li><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule/">LeetCode 207 课程表</a> 说的这种选课程的问题。要学A课程，必须先学 B 课程等。</li>
+<li><a target="_blank" rel="noopener" href="https://airflow.apache.org/">Apache Airflow</a> 专门用来做工作流的工具都有涉及到相关的知识。</li>
 </ol>
-<h2 id="mapToLong"><a href="#mapToLong" class="headerlink" title="mapToLong"></a>mapToLong</h2><p>和上述的 map 差不多的，那为什么要用 mapToLong 呢，主要是执行完 mapToLong 可以返回一个 LongStream，然后可以继续执行类似 <code>.sum()</code> 这些方法了， map 由于不是返回这种类型，所以没法继续 <code>.sum()</code> 下去。</p>
-<h2 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h2><p>这里可以参考 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26684562/whats-the-difference-between-map-and-flatmap-methods-in-java-8#:~:text=flatMap%20%2C%20as%20it%20can%20be,stream%20without%20flattening%20the%20stream">What’s the difference between map() and flatMap() methods in Java 8? </a></p>
-<blockquote>
-<p>Both map and flatMap can be applied to a Stream<T> and they both return a Stream<R>. The difference is that the map operation produces one output value for each input value, whereas the flatMap operation produces an arbitrary number (zero or more) values for each input value.</p>
+<h2 id="《算法导论》中的解法"><a href="#《算法导论》中的解法" class="headerlink" title="《算法导论》中的解法"></a>《算法导论》中的解法</h2><blockquote>
+<p>TOPOLOGICAL-SORT(G)<br>call DFS(G) to compute finishing times v.f for each vertex v as each vertex is finished, insert it onto the front of a linked list<br>return the linked list of vertices</p>
 </blockquote>
-<p>也就是说，map 的话，只能1对1，进来来1个，就转出去1个。但是对于 flatMap，就可以进来1个元素，返回10个元素，这样1对多的返回回去。  </p>
-<p>再举个例子，入参是这样 <code>List&lt;Student&gt; student;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Student &#123;</span><br><span class="line">    private List&lt;Teacher&gt; teacherList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后你要拿到所有的 teacher 列表，所以这个时候就要用 flatMap，写法上可以这样写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.stream()</span><br><span class="line">.map(stu -&gt; stu.getTeacherList())</span><br><span class="line">.flatMap(Collection::stream)</span><br></pre></td></tr></table></figure>
+<p>为什么这种算法能够 work 呢？</p>
+<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><ol>
+<li>对于 <code>(u,v)</code>，既然 <code>dfs(u)</code> 遍历，那肯定先遍历完 v，最后再回到 u，就遍历结束，所以 <code>v.f &lt; u.f</code>。</li>
+<li>对于任意一条边 <code>(u,v)</code>，如果它正在被遍历，那么 v 节点，肯定不可能也正在被遍历的，它要么还没被遍历过，要么已经被遍历完了。</li>
+<li>接着 2，如果 v 还没被遍历过，那根据 dfs，要 v 被遍历完，才能回到 u，所以 <code>v.f &lt; u.f</code>。</li>
+<li>接着2，如果 v 已经被遍历了，那么 v.f 就证明早就被遍历了，所以也有 <code>v.f &lt; u.f</code>。</li>
+</ol>
+<p>这样，就可以证明，上面这个算法，<code>dfs(G)</code>，能够保证 <code>v.f &lt; u.f</code>。</p>
+<p>这个意味着什么，这个意味着 <code>(u,v)</code>，也就是 u 依赖 v，v总是先 finish 的，然后 u 才finish。所以就先 <code>list.add(0,v)</code> 就完事了。</p>
+<p>疑问，上面第2点，你咋知道 <code>对于任意一条边 (u,v)，如果它正在被遍历，那么 v 节点，肯定不可能也正在被遍历的</code> ？这又涉及另外一个证明了。</p>
+<h4 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h4><p>你说了是有向无环图，有向无环图，就是不可能 <code>对于任意一条边 (u,v)，如果它正在被遍历，那么 v 节点，肯定不可能也正在被遍历的</code> ，证明略微有点复杂，参考《算法导论》，这里记结论好了。</p>
+<h4 id="解法伪代码"><a href="#解法伪代码" class="headerlink" title="解法伪代码"></a>解法伪代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">  boolean circle</span><br><span class="line">  int[] vertexVisit </span><br><span class="line">  int[] result</span><br><span class="line">  int resultLastIdx</span><br><span class="line">  for(int u &#x3D; 0; i &lt; vertexVisit.length; ++u) &#123;</span><br><span class="line">    if(vertexVisit[u] &#x3D;&#x3D; 0) dfs(u); </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">dfs(u):</span><br><span class="line">  vertexVisit[u] &#x3D; 1;</span><br><span class="line">  for(int v: uConnects) &#123;</span><br><span class="line">    if(vertexVisit[v] &#x3D;&#x3D; 0) dfs(v);</span><br><span class="line">    else if(vertexVisit[v] &#x3D;&#x3D; 1) &#123;</span><br><span class="line">      circle &#x3D; true;</span><br><span class="line">      return ;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  vertexVisit[u] &#x3D; 2;</span><br><span class="line">  result[resultLastIdx--] &#x3D; u;</span><br></pre></td></tr></table></figure>
 
-<p>这样这个流就是全部的 teacher 的。</p>
-<h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h2><p>主要用于把Stream 元素组合起来。例如有 <code>list = &#123;1d,2d,3d,4d,5d&#125;</code> ，要加和，那么就可以使用 reduce，然后再使用 <code>.reduce(0, Double::sum)</code> ，最后返回 double 类型的一个和。所以说，把Stream 元素组合起来 就是这个意思。</p>
+<h2 id="入度为0的解法"><a href="#入度为0的解法" class="headerlink" title="入度为0的解法"></a>入度为0的解法</h2><p>在做 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule/">LeetCode 207 课程表</a> 和 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule-ii/">LeetCode 210 课程表</a> 的时候，发现了一种入度为0的解法。</p>
+<p>主要思路是：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b59db381561a">什么是拓扑排序（Topological Sorting）</a></p>
+<ol>
+<li>删除入度为0的点</li>
+<li>然后删除这个点和它的所有边，并且更新它所有边的入度出度</li>
+<li>一直1，2步骤。</li>
+</ol>
+<p>这种方法看起来也挺好挺直接的，伪代码类似：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer,List&lt;Integer&gt;&gt; edgeMap;</span><br><span class="line">int[] inDegreeArray;</span><br><span class="line">Deque&lt;Integer&gt; inDegree0Deque;</span><br><span class="line">int[] result;</span><br><span class="line"></span><br><span class="line">while(!inDegree0Deque.isEmpty()) &#123;</span><br><span class="line">  int u &#x3D; inDegree0Deque.pop();</span><br><span class="line">  result[idx++] &#x3D; u;</span><br><span class="line">  List&lt;Integer&gt; vList &#x3D; edgeMap.get(u);</span><br><span class="line">  for vList:</span><br><span class="line">    inDegreeArray[v]--;</span><br><span class="line">    if(inDegreeArray[v] &#x3D;&#x3D; 0) inDegree0Deque.push(v);</span><br><span class="line">  edgeMap.remove(u);</span><br><span class="line">&#125;</span><br><span class="line">return result;</span><br></pre></td></tr></table></figure>
+
+<h2 id="所有可能的拓扑排序-该拓扑排序的唯一性问题"><a href="#所有可能的拓扑排序-该拓扑排序的唯一性问题" class="headerlink" title="所有可能的拓扑排序,该拓扑排序的唯一性问题"></a>所有可能的拓扑排序,该拓扑排序的唯一性问题</h2><p>上述的拓扑排序的解法，只是给出了可能的一个解。</p>
+<p>要判断是否有多个解的时候，可以发现《算法导论》的 dfs 方法不是特别好判断，但是入度为0的方案中就比较好判断了，每次判断 <code>inDegree0Deque</code>是否有大于1个的元素，有2个或者2个以上，证明有多种选择。</p>
+<p>那假如要拿到所有的拓扑排序序列呢？回想以前做题是怎么拿到所有可能性的，无非就是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for all possibility</span><br><span class="line">  select a </span><br><span class="line">  do logic &#x2F;&#x2F; record</span><br><span class="line">  remove a</span><br></pre></td></tr></table></figure>
+
+<p>类似回溯这种。上面入库为 0 的解法里，<code>inDegree0Deque</code> 其实就有了所有的选项，这里就可以类似用这种方法。上述的 <code>int u = inDegree0Deque.pop();</code> 就要改为 for 循环可以挑选的了。</p>
+<p>参考代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">class Test &#123;</span><br><span class="line"></span><br><span class="line">    private static int size &#x3D; 5;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[][] prerequisites &#x3D; &#123;&#123;1, 0&#125;, &#123;2, 0&#125;, &#123;3, 2&#125;, &#123;4, 3&#125;&#125;;</span><br><span class="line">        int[] inDegreeArray &#x3D; new int[size];</span><br><span class="line">        Map&lt;Integer, List&lt;Integer&gt;&gt; edgeMap &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">        for (int[] prerequisit : prerequisites) &#123;</span><br><span class="line">            int u &#x3D; prerequisit[1];</span><br><span class="line">            int v &#x3D; prerequisit[0];</span><br><span class="line">            inDegreeArray[v]++;</span><br><span class="line">            List&lt;Integer&gt; vList &#x3D; edgeMap.getOrDefault(u, new LinkedList&lt;&gt;());</span><br><span class="line">            vList.add(v);</span><br><span class="line">            edgeMap.put(u, vList);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt; inDegree0List &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">        for (int i &#x3D; 0; i &lt; inDegreeArray.length; ++i) &#123;</span><br><span class="line">            if (inDegreeArray[i] &#x3D;&#x3D; 0) inDegree0List.add(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; result &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">        doFindOrder(result, &quot;&quot;, inDegree0List, edgeMap, inDegreeArray);</span><br><span class="line"></span><br><span class="line">        for (String str : result) &#123;</span><br><span class="line">            System.out.println(str);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void doFindOrder(</span><br><span class="line">            List&lt;String&gt; result,</span><br><span class="line">            String subResult,</span><br><span class="line">            List&lt;Integer&gt; inDegree0List,</span><br><span class="line">            Map&lt;Integer, List&lt;Integer&gt;&gt; edgeMap,</span><br><span class="line">            int[] inDegreeArray) &#123;</span><br><span class="line"></span><br><span class="line">        if (inDegree0List.size() &#x3D;&#x3D; 0) &#123;</span><br><span class="line">            if (subResult.length() &#x3D;&#x3D; size) result.add(subResult);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (int i &#x3D; 0; i &lt; inDegree0List.size(); ++i) &#123;</span><br><span class="line">            int selectOne &#x3D; inDegree0List.get(i);</span><br><span class="line">            inDegree0List.remove(i);</span><br><span class="line"></span><br><span class="line">            List&lt;Integer&gt; vList &#x3D; edgeMap.getOrDefault(selectOne, new LinkedList&lt;&gt;());</span><br><span class="line">            List&lt;Integer&gt; newDegree0List &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">            for (int v : vList) &#123;</span><br><span class="line">                inDegreeArray[v]--;</span><br><span class="line">                if (inDegreeArray[v] &#x3D;&#x3D; 0) newDegree0List.add(v);</span><br><span class="line">            &#125;</span><br><span class="line">            inDegree0List.addAll(newDegree0List);</span><br><span class="line"></span><br><span class="line">            List&lt;Integer&gt; removeEdgeV &#x3D; edgeMap.getOrDefault(selectOne, new LinkedList&lt;&gt;());</span><br><span class="line">            edgeMap.remove(selectOne);</span><br><span class="line"></span><br><span class="line">            doFindOrder(result, subResult + selectOne, inDegree0List, edgeMap, inDegreeArray);</span><br><span class="line"></span><br><span class="line">            inDegree0List.add(i, selectOne);</span><br><span class="line">            edgeMap.put(selectOne, removeEdgeV);</span><br><span class="line"></span><br><span class="line">            for (int v : vList) &#123;</span><br><span class="line">                inDegreeArray[v]++;</span><br><span class="line">            &#125;</span><br><span class="line">            inDegree0List.removeAll(newDegree0List);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="LeetCode-的题目"><a href="#LeetCode-的题目" class="headerlink" title="LeetCode 的题目"></a>LeetCode 的题目</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/tag/topological-sort/">LeetCode-topological-sort</a></p>
+<p>课程表的这两题还不错。</p>
 
       
 
@@ -222,7 +251,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
         		</li>
       		
 		</ul>
@@ -241,18 +270,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Version乐观锁的坑-domain层转化丢失version版本号
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">踩坑：SpringBoot的@Async注解同一个类中调用不生效</div>
+    <a href="/2020/12/14/%E3%80%8A%E5%8E%9F%E5%88%99%E3%80%8B%E3%80%8A%E5%88%BB%E6%84%8F%E7%BB%83%E4%B9%A0%E3%80%8B%E8%AF%BB%E5%90%8E%E7%9A%84%E4%B8%80%E7%82%B9%E6%84%9F%E6%83%B3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">《原则》《刻意练习》读后的一点感想</div>
       <i class="icon-circle-right"></i>
     </a>
   
