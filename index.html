@@ -161,6 +161,79 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-最小生成树-Kruskal与Prim算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/01/10/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-Kruskal%E4%B8%8EPrim%E7%AE%97%E6%B3%95/">最小生成树:Kruskal与Prim算法</a>
+    </h1>
+  
+
+        
+        <a href="/2021/01/10/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-Kruskal%E4%B8%8EPrim%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2021-01-10T04:14:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="最小生成树的基本概念"><a href="#最小生成树的基本概念" class="headerlink" title="最小生成树的基本概念"></a>最小生成树的基本概念</h2><p>最小生成树是最小权重生成树的简称，它主要是面对这样的一些问题：有很多点，需要连接一个图，每条线是有权重的，如何连通所有的点，并且使得权重最小。</p>
+<p>实际问题，就类似于 <code>城市修路</code> 的问题。</p>
+        
+          <a class="article-more-a" href="/2021/01/10/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-Kruskal%E4%B8%8EPrim%E7%AE%97%E6%B3%95/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-拓扑排序-dfs与入度为0解法以及唯一性" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -867,87 +940,9 @@
 
 
   
-    <article id="post-LeetCode-栈类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/">LeetCode:栈类型</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-12-08T00:19:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一、括号相关问题"><a href="#一、括号相关问题" class="headerlink" title="一、括号相关问题"></a>一、括号相关问题</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/valid-parentheses/">20. Valid Parentheses</a>：热身</li>
-<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/score-of-parentheses/">856. Score of Parentheses</a>：非常好的一道题。不过不是特别喜欢答案中使用 stack 的做法，因为 stack 既维护了深度和score，这个stack表示了两层含义，职责有点不是特别单一。这里另外一种做法可以利用 <code>A(B+C) = AB + AC</code> / <code>A(B(C + D)) = ABC + ABD</code></li>
-<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/">1190. Reverse Substrings Between Each Pair of Parentheses</a></li>
-<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/">1249. Minimum Remove to Make Valid Parentheses</a></li>
-<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/minimum-insertions-to-balance-a-parentheses-string/">1541. Minimum Insertions to Balance a Parentheses String</a>：非常有趣的一道题。一般习惯了括号问题都用栈，所以我用了2个栈分别保存’(‘和 ‘)’，又因为需要连续，所以发现连续 push 的 ‘)’ 是单数的时候，多 push 多一个，result++ 即可。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 

@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | 浮亮2021的博客</title>
+  <title>最小生成树:Kruskal与Prim算法 | 浮亮2021的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hello1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="浮亮2021的博客">
-<meta property="og:url" content="http://example.com/archives/page/2/index.html">
+  <meta name="description" content="最小生成树的基本概念最小生成树是最小权重生成树的简称，它主要是面对这样的一些问题：有很多点，需要连接一个图，每条线是有权重的，如何连通所有的点，并且使得权重最小。 实际问题，就类似于 城市修路 的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最小生成树:Kruskal与Prim算法">
+<meta property="og:url" content="http://example.com/2021/01/10/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-Kruskal%E4%B8%8EPrim%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="浮亮2021的博客">
-<meta property="og:description" content="hello1">
+<meta property="og:description" content="最小生成树的基本概念最小生成树是最小权重生成树的简称，它主要是面对这样的一些问题：有很多点，需要连接一个图，每条线是有权重的，如何连通所有的点，并且使得权重最小。 实际问题，就类似于 城市修路 的问题。">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-10T04:14:54.000Z">
+<meta property="article:modified_time" content="2021-01-10T04:49:30.928Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
   
   
@@ -159,36 +162,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-最小生成树-Kruskal与Prim算法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      最小生成树:Kruskal与Prim算法
+    </h1>
+  
+
+        
+        <a href="/2021/01/10/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-Kruskal%E4%B8%8EPrim%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2021-01-10T04:14:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-01-10</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="最小生成树的基本概念"><a href="#最小生成树的基本概念" class="headerlink" title="最小生成树的基本概念"></a>最小生成树的基本概念</h2><p>最小生成树是最小权重生成树的简称，它主要是面对这样的一些问题：有很多点，需要连接一个图，每条线是有权重的，如何连通所有的点，并且使得权重最小。</p>
+<p>实际问题，就类似于 <code>城市修路</code> 的问题。</p>
+<a id="more"></a>
+
+<h2 id="Kruskal解法和Prim解法"><a href="#Kruskal解法和Prim解法" class="headerlink" title="Kruskal解法和Prim解法"></a>Kruskal解法和Prim解法</h2><p>一般会有 Kruskal 算法和 Prim 算法，这两种算法都是贪心算法。</p>
+<p>贪心算法并不能保证得到最优解，但是很多问题确实可以求得最优解。那么如何证明一个贪心算法是否能求解一个最优化问题呢，这个就没有什么通用的方法或者原理，只能具体问题具体分析具体论证。</p>
+<p>对于Kruskal和Prim算法，它们就是属于贪心算法，并且经过一定的论证，就能够证明出他们能够得到最小生成树。</p>
+<p>至于是怎么论证的，暂时先跳过了，反正就记住结论是可以的就行了。</p>
+<p>在时间复杂度方面，Kruskal 和 Prim 算法都可以以 <code>O(ElgV)</code> 的时间复杂度运行。另外，Prim 算法，它的时间复杂度主要还是取决于最小优先队列的实现方式，例如如果使用斐波那契堆来实现最小优先队列，那么还可以进一步优化为 <code>O(E + VlgV)</code> 的时间复杂度。</p>
+<h4 id="Kruskal-算法"><a href="#Kruskal-算法" class="headerlink" title="Kruskal 算法"></a>Kruskal 算法</h4><p>《算法导论》中给出的伪代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for each vertex</span><br><span class="line">  make-set</span><br><span class="line">sort the set by weight</span><br><span class="line">for each edge from set</span><br><span class="line">  if(union-find(u) !&#x3D; union-find(v))</span><br><span class="line">    use this edge</span><br></pre></td></tr></table></figure>
+
+<p>主要思想就是：给出所有的边，排序，然后从小到大挑（这里就体现了贪心），根据 union-find 判断是否有环，有环证明不能选这条边。</p>
+<p>这里再参考视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Eb41177d1?from=search&seid=1146690749041529778">最小生成树(Kruskal(克鲁斯卡尔)和Prim(普里姆))算法动画演示</a> 就非常的清楚了。</p>
+<p>最后参考一下：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/min-cost-to-connect-all-points/">1584. 连接所有点的最小费用</a>，可以 coding 实现一下即可。参考：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int minCostConnectPoints(int[][] points) &#123;</span><br><span class="line">        Vertex[] vertexs &#x3D; constructVertexFromPoints(points);</span><br><span class="line">        List&lt;Edge&gt; edges &#x3D; constructEdgeFromVertex(points, vertexs);</span><br><span class="line">        Collections.sort(edges,(edge1, edge2) -&gt; &#123;</span><br><span class="line">            return edge1.getWeight() - edge2.getWeight();</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">        UnionFind uf &#x3D; new UnionFind(vertexs.length);</span><br><span class="line">        Map&lt;Vertex, Integer&gt; vuf &#x3D; constructVertexUF(vertexs);</span><br><span class="line"></span><br><span class="line">        int result &#x3D; 0;</span><br><span class="line">        while(edges.size() !&#x3D; 0) &#123;</span><br><span class="line">            Edge selectEdge &#x3D; edges.get(0);</span><br><span class="line">            int p &#x3D; vuf.get(selectEdge.getU());</span><br><span class="line">            int q &#x3D; vuf.get(selectEdge.getV());</span><br><span class="line">            if(uf.find(p) !&#x3D; uf.find(q)) &#123;</span><br><span class="line">                result +&#x3D; selectEdge.getWeight();</span><br><span class="line">                uf.union(p, q);</span><br><span class="line">            &#125;</span><br><span class="line">            edges.remove(0);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Map&lt;Vertex, Integer&gt; constructVertexUF(Vertex[] vertexs)&#123;</span><br><span class="line">        Map&lt;Vertex, Integer&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">        for(int i &#x3D; 0; i &lt; vertexs.length; ++i) &#123;</span><br><span class="line">            map.put(vertexs[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Vertex[] constructVertexFromPoints(int[][] points)&#123;</span><br><span class="line">        Vertex[] vertexs &#x3D; new Vertex[points.length];</span><br><span class="line">        for(int i &#x3D; 0; i &lt; vertexs.length; ++i) &#123;</span><br><span class="line">            vertexs[i] &#x3D; new Vertex(points[i][0],points[i][1], i);</span><br><span class="line">        &#125;</span><br><span class="line">        return vertexs;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public List&lt;Edge&gt; constructEdgeFromVertex(int[][] points, Vertex[] vertexs)&#123;</span><br><span class="line">        List&lt;Edge&gt; edges &#x3D; new LinkedList&lt;&gt;();</span><br><span class="line">        for(int i &#x3D; 0; i &lt; vertexs.length - 1; ++i) &#123;</span><br><span class="line">            for(int j &#x3D; i + 1; j &lt; vertexs.length; ++j) &#123;</span><br><span class="line">                edges.add(new Edge(points, vertexs[i], vertexs[j]));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return edges;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public class Vertex&#123;</span><br><span class="line">        private int x;</span><br><span class="line">        private int y;</span><br><span class="line">        private int pointNum;</span><br><span class="line">        public Vertex(int x, int y, int pointNum) &#123;</span><br><span class="line">            this.x &#x3D; x;</span><br><span class="line">            this.y &#x3D; y;</span><br><span class="line">            this.pointNum &#x3D; pointNum;</span><br><span class="line">        &#125;</span><br><span class="line">        public int getX()&#123;return x;&#125;</span><br><span class="line">        public int getY()&#123;return y;&#125;</span><br><span class="line">        public int getPointNum()&#123;return this.pointNum;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public class Edge&#123;</span><br><span class="line">        private Vertex u;</span><br><span class="line">        private Vertex v;</span><br><span class="line">        private int weight;</span><br><span class="line">        public Edge(int[][] points, Vertex u, Vertex v)&#123;</span><br><span class="line">            this.u &#x3D; u;</span><br><span class="line">            this.v &#x3D; v;</span><br><span class="line"></span><br><span class="line">            int xu &#x3D; points[u.getPointNum()][0];</span><br><span class="line">            int yu &#x3D; points[u.getPointNum()][1];</span><br><span class="line">            int xv &#x3D; points[v.getPointNum()][0];</span><br><span class="line">            int yv &#x3D; points[v.getPointNum()][1];</span><br><span class="line">            int distance &#x3D; Math.abs(xu-xv) + Math.abs(yu-yv);</span><br><span class="line"></span><br><span class="line">            this.weight &#x3D; distance;</span><br><span class="line">        &#125;</span><br><span class="line">        public Vertex getU()&#123;return this.u;&#125;</span><br><span class="line">        public Vertex getV()&#123;return this.v;&#125;</span><br><span class="line">        public int getWeight()&#123;return this.weight;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public class UnionFind&#123;</span><br><span class="line">        private int size;</span><br><span class="line">        private int[] parent;</span><br><span class="line">        public UnionFind(int size)&#123;</span><br><span class="line">            this.size &#x3D; size;</span><br><span class="line">            parent &#x3D; new int[size];</span><br><span class="line">            for(int i &#x3D; 0; i &lt; parent.length; ++i) &#123;</span><br><span class="line">                parent[i] &#x3D; i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        public void union(int p, int q) &#123;</span><br><span class="line">            int rootP &#x3D; find(p);</span><br><span class="line">            int rootQ &#x3D; find(q);</span><br><span class="line">            parent[rootP] &#x3D; rootQ;</span><br><span class="line">        &#125;</span><br><span class="line">        public int find(int x) &#123;</span><br><span class="line">            while(parent[x] !&#x3D; x) &#123;</span><br><span class="line">                x &#x3D; parent[x];</span><br><span class="line">            &#125;</span><br><span class="line">            return x;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Prim-算法"><a href="#Prim-算法" class="headerlink" title="Prim 算法"></a>Prim 算法</h4><p>Kruskal 主要是以边的维度来解决问题，Prim 算法就是以点的维度解决问题。这里再参考视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Eb41177d1?from=search&seid=1146690749041529778">最小生成树(Kruskal(克鲁斯卡尔)和Prim(普里姆))算法动画演示</a> 就非常的清楚了。</p>
+<p>同样的：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/min-cost-to-connect-all-points/">1584. 连接所有点的最小费用</a>，使用 Prim 算法实现，参考代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int minCostConnectPoints(int[][] points) &#123;</span><br><span class="line">        int[][] graph &#x3D; constructFromPoints(points);</span><br><span class="line">        int[] tree &#x3D; prim(graph);</span><br><span class="line">        </span><br><span class="line">        return countWeight(graph, tree);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int countWeight(int[][] graph, int[] tree) &#123;</span><br><span class="line">        int result &#x3D; 0;</span><br><span class="line">        for(int i &#x3D; 0; i &lt; tree.length; ++i) &#123;</span><br><span class="line">            if(tree[i] &#x3D;&#x3D; -1) continue;</span><br><span class="line">            int u &#x3D; i;</span><br><span class="line">            int v &#x3D; tree[i];</span><br><span class="line">            result +&#x3D; graph[u][v];</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public int[] prim(int[][] graph) &#123;</span><br><span class="line">        int size &#x3D; graph.length;</span><br><span class="line">        int[] minWeighs &#x3D; new int[size];</span><br><span class="line">        for (int i &#x3D; 0; i &lt; size; ++i) &#123;</span><br><span class="line">            minWeighs[i] &#x3D; Integer.MAX_VALUE;</span><br><span class="line">        &#125;</span><br><span class="line">        int[] parent &#x3D; new int[size];</span><br><span class="line">        for (int i &#x3D; 0; i &lt; size; ++i) &#123;</span><br><span class="line">            parent[i] &#x3D; -1;</span><br><span class="line">        &#125;</span><br><span class="line">        boolean[] selectedVertex &#x3D; new boolean[size];</span><br><span class="line"></span><br><span class="line">        int root &#x3D; 0;</span><br><span class="line">        selectedVertex[root] &#x3D; true;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; size; ++i) &#123;</span><br><span class="line">            if (i &#x3D;&#x3D; root) continue;</span><br><span class="line">            minWeighs[i] &#x3D; graph[root][i];</span><br><span class="line">            parent[i] &#x3D; root;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (int i &#x3D; 1; i &lt; size; ++i) &#123;</span><br><span class="line">            int minWeightVertex &#x3D; -1;</span><br><span class="line">            for (int j &#x3D; 0; j &lt; size; ++j) &#123;</span><br><span class="line">                if (selectedVertex[j]) continue;</span><br><span class="line">                if (minWeightVertex &#x3D;&#x3D; -1) minWeightVertex &#x3D; j;</span><br><span class="line">                else if (minWeighs[j] &lt; minWeighs[minWeightVertex]) &#123;</span><br><span class="line">                    minWeightVertex &#x3D; j;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            selectedVertex[minWeightVertex] &#x3D; true;</span><br><span class="line">            for (int k &#x3D; 0; k &lt; size; ++k) &#123;</span><br><span class="line">                if (selectedVertex[k] || graph[k][minWeightVertex] &#x3D;&#x3D; -1) continue;</span><br><span class="line">                if (graph[k][minWeightVertex] &lt; minWeighs[k]) &#123;</span><br><span class="line">                    minWeighs[k] &#x3D; graph[k][minWeightVertex];</span><br><span class="line">                    parent[k] &#x3D; minWeightVertex;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return parent;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public int[][] constructFromPoints(int[][] points)&#123;</span><br><span class="line">        int size &#x3D; points.length;</span><br><span class="line">        int[][] distance &#x3D; new int[size][size];</span><br><span class="line">        for(int i &#x3D; 0; i &lt; size; ++i) &#123;</span><br><span class="line">            for(int j &#x3D; 0; j &lt; size; ++j) &#123;</span><br><span class="line">                distance[i][j] &#x3D; -1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        for(int i &#x3D; 0; i &lt; points.length - 1; ++i) &#123;</span><br><span class="line">            for(int j &#x3D; i + 1; j &lt; points.length; ++j) &#123;</span><br><span class="line">                int dis &#x3D; Math.abs(points[i][0] - points[j][0])</span><br><span class="line">                            + Math.abs(points[i][1] - points[j][1]);</span><br><span class="line">                distance[i][j] &#x3D; dis;</span><br><span class="line">                distance[j][i] &#x3D; dis;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return distance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Kruskal-算法和-Prim-算法的区别"><a href="#Kruskal-算法和-Prim-算法的区别" class="headerlink" title="Kruskal 算法和 Prim 算法的区别"></a>Kruskal 算法和 Prim 算法的区别</h4><p>从上面的实现算法来看，可以看到 Kruskal 主要是要对边进行一个排序，所以边越少，耗费时间越少，因为适合稀疏图。</p>
+<p>对于 Prim 算法，由于是以节点为中心点解决问题，所以对于稠密图上，优势要比 Kruskal 算法大。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-12-08T00:19:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/LeetCode-%E6%A0%88%E7%B1%BB%E5%9E%8B/">LeetCode:栈类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -200,364 +223,54 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/08/LeetCode-Tree%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-12-08T00:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/06/%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F-dfs%E4%B8%8E%E5%85%A5%E5%BA%A6%E4%B8%BA0%E8%A7%A3%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%94%AF%E4%B8%80%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">拓扑排序-dfs与入度为0解法以及唯一性</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/08/LeetCode-Tree%E7%B1%BB%E5%9E%8B/">LeetCode:Tree类型</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/" class="archive-article-date">
-  	<time datetime="2020-12-07T13:54:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/07/Version%E4%B9%90%E8%A7%82%E9%94%81%E7%9A%84%E5%9D%91-domain%E5%B1%82%E8%BD%AC%E5%8C%96%E4%B8%A2%E5%A4%B1version%E7%89%88%E6%9C%AC%E5%8F%B7/">Version乐观锁的坑-domain层转化丢失version版本号</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-12-05T06:14:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/05/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93%EF%BC%9AJavaStream%E6%B5%81%E5%BC%8F%E5%86%99%E6%B3%95/">工作总结：JavaStream流式写法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/" class="archive-article-date">
-  	<time datetime="2020-12-04T12:56:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E8%B8%A9%E5%9D%91%EF%BC%9ASpringBoot%E7%9A%84@Async%E6%B3%A8%E8%A7%A3%E5%90%8C%E4%B8%80%E4%B8%AA%E7%B1%BB%E4%B8%AD%E8%B0%83%E7%94%A8%E4%B8%8D%E7%94%9F%E6%95%88/">踩坑：SpringBoot的@Async注解同一个类中调用不生效</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-12-04T11:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/12/04/%E4%B8%AA%E4%BA%BA%E5%81%A5%E8%BA%AB%E5%8A%A8%E4%BD%9C%E6%95%B4%E7%90%86/">个人健身动作整理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">随便写写</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/30/%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%80%E8%88%AC%E8%AE%A8%E8%AE%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/" class="archive-article-date">
-  	<time datetime="2020-11-30T12:10:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/30/%E7%89%A9%E7%90%86%E5%B1%82%E4%B8%80%E8%88%AC%E8%AE%A8%E8%AE%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98/">物理层一般讨论什么问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">一些基础知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/30/%E5%81%9A%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E7%82%B9/" class="archive-article-date">
-  	<time datetime="2020-11-30T12:03:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/30/%E5%81%9A%E4%B8%80%E4%B8%AA%E9%9C%80%E6%B1%82%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E7%82%B9/">做一个需求需要考虑的点</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">System-Design</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/29/LeetCode-Two-Pointer%E7%B1%BB%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-11-29T10:18:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/29/LeetCode-Two-Pointer%E7%B1%BB%E5%9E%8B/">LeetCode:Two_Pointer类型</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/29/%E6%89%AB%E7%9B%B2%EF%BC%9AQueryDSL/" class="archive-article-date">
-  	<time datetime="2020-11-29T10:12:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/11/29/%E6%89%AB%E7%9B%B2%EF%BC%9AQueryDSL/">扫盲：MapStruct</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">工作中的一些问题和总结</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -581,8 +294,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

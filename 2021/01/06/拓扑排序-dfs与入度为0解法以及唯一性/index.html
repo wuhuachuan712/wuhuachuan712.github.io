@@ -16,7 +16,7 @@
 <meta property="og:description" content="前言想看看图相关的知识，看到了《算法导论》中22章的图基本算法的拓扑排序，这里想总结下。 主要包括：  什么是拓扑排序和解决的问题 《算法导论》中的解法 入度为0的解法 所有可能的拓扑排序,该拓扑排序的唯一性问题 LeetCode 的题目">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-01-06T04:35:01.000Z">
-<meta property="article:modified_time" content="2021-01-06T04:36:51.091Z">
+<meta property="article:modified_time" content="2021-01-10T04:13:59.810Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
@@ -193,8 +193,9 @@
 </ul>
 <a id="more"></a>
 
-<h2 id="拓扑排序概念和解决的问题"><a href="#拓扑排序概念和解决的问题" class="headerlink" title="拓扑排序概念和解决的问题"></a>拓扑排序概念和解决的问题</h2><p>拓扑排序是针对 <code>有向无环图</code> 的一种线性排序。这个排序要满足这个条件：对于有向边 <code>(u,v)</code>，<code>u</code> 要在 <code>v</code> 的前面。</p>
-<p>它是可以用来解决需要使用有向无环图来 <code>指明事件的先后顺序</code>。</p>
+<h2 id="拓扑排序概念和解决的问题"><a href="#拓扑排序概念和解决的问题" class="headerlink" title="拓扑排序概念和解决的问题"></a>拓扑排序概念和解决的问题</h2><p>拓扑排序主要说的是这样的一个事情：它能够以 <code>O(V + E)</code> 的时间复杂度来解决，指明一些事件的先后顺序，或者说依赖问题。</p>
+<p>当然，这个时间复杂度是不包括实际问题转化为图问题的建模过程所消耗的时间。</p>
+<p>官方上的定义：拓扑排序就是针对 <code>有向无环图</code> 的一种线性排序。这个排序要满足这个条件：对于有向边 <code>(u,v)</code>，<code>u</code> 要在 <code>v</code> 的前面。</p>
 <p>例如说：</p>
 <ol>
 <li>《算法导论》里提到的起床穿衣服的例子，先穿衣，再洗漱，再整理等等。</li>
@@ -217,6 +218,11 @@
 <h4 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h4><p>你说了是有向无环图，有向无环图，就是不可能 <code>对于任意一条边 (u,v)，如果它正在被遍历，那么 v 节点，肯定不可能也正在被遍历的</code> ，证明略微有点复杂，参考《算法导论》，这里记结论好了。</p>
 <h4 id="解法伪代码"><a href="#解法伪代码" class="headerlink" title="解法伪代码"></a>解法伪代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">  boolean circle</span><br><span class="line">  int[] vertexVisit </span><br><span class="line">  int[] result</span><br><span class="line">  int resultLastIdx</span><br><span class="line">  for(int u &#x3D; 0; i &lt; vertexVisit.length; ++u) &#123;</span><br><span class="line">    if(vertexVisit[u] &#x3D;&#x3D; 0) dfs(u); </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">dfs(u):</span><br><span class="line">  vertexVisit[u] &#x3D; 1;</span><br><span class="line">  for(int v: uConnects) &#123;</span><br><span class="line">    if(vertexVisit[v] &#x3D;&#x3D; 0) dfs(v);</span><br><span class="line">    else if(vertexVisit[v] &#x3D;&#x3D; 1) &#123;</span><br><span class="line">      circle &#x3D; true;</span><br><span class="line">      return ;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  vertexVisit[u] &#x3D; 2;</span><br><span class="line">  result[resultLastIdx--] &#x3D; u;</span><br></pre></td></tr></table></figure>
 
+<ol>
+<li>上述第 6 行，会以 <code>O(V)</code> 的时间复杂度遍历一遍顶点。</li>
+<li>在 <code>dfs</code> 方法中，第 12 行，会遍历1个顶点的所有边；在 <code>dfs</code> 方法中，一个正在被遍历的顶点不可能再次进入(否则就是环了)，所有要么是没遍历过的，要是是已经遍历完的；所以这里的时间复杂度为 <code>O(E)</code></li>
+<li>总的来说，就是 <code>O(V + E)</code> 的时间复杂度。</li>
+</ol>
 <h2 id="入度为0的解法"><a href="#入度为0的解法" class="headerlink" title="入度为0的解法"></a>入度为0的解法</h2><p>在做 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule/">LeetCode 207 课程表</a> 和 <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule-ii/">LeetCode 210 课程表</a> 的时候，发现了一种入度为0的解法。</p>
 <p>主要思路是：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b59db381561a">什么是拓扑排序（Topological Sorting）</a></p>
 <ol>
@@ -269,6 +275,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/01/10/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91-Kruskal%E4%B8%8EPrim%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          最小生成树:Kruskal与Prim算法
+        
+      </div>
+    </a>
   
   
     <a href="/2020/12/14/%E3%80%8A%E5%8E%9F%E5%88%99%E3%80%8B%E3%80%8A%E5%88%BB%E6%84%8F%E7%BB%83%E4%B9%A0%E3%80%8B%E8%AF%BB%E5%90%8E%E7%9A%84%E4%B8%80%E7%82%B9%E6%84%9F%E6%83%B3/" id="article-nav-older" class="article-nav-link-wrap">
